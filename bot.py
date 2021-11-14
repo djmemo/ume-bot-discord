@@ -2,7 +2,7 @@ import os
 import disnake
 from disnake.ext import commands
 
-guilds = list(map(str.strip, os.getenv("GUILDS").split(",")))
+guilds = list(map(int, list(map(str.strip, os.getenv("GUILDS").split(",")))))
 token = os.getenv("TOKEN")
 
 intents = disnake.Intents(guilds=True, members=True, messages=True, reactions=True)
