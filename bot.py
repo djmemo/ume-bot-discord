@@ -26,4 +26,29 @@ async def on_ready():
     print("The bot is ready!")
 
 
+@commands.is_owner()
+@bot.slash_command(default_permissions=False)
+async def unload(ctx, extension):
+    """Use this to unload cogs. Usage: $unload <cog_name>"""
+    bot.unload_extension(f"cogs.{extension}")
+    await ctx.send(f"Cog {extension} is now unloaded!")
+
+
+@commands.is_owner()
+@bot.slash_command(default_permissions=False)
+async def reload(ctx, extension):
+    """Use this to reload individual cogs. Usage: $reload <cog_name>"""
+    bot.reload_extension(f"cogs.{extension}")
+    await ctx.send(f"Cog {extension} is now reloaded!")
+
+
+@commands.is_owner()
+@bot.slash_command(default_permissions=False)
+async def reloadall(ctx):
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            bot.reload_extension(f"cogs.{filename[:-3]}")
+            await ctx.send(f"Cog {filename[:-3]} is now reloaded!")
+
+
 bot.run(token)
